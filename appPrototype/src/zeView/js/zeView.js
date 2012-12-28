@@ -30,6 +30,9 @@ Y.ZeView = Y.Base.create(
                 this._render(container);
             }
 
+            this.set('swapContainer', container.one('.variableContent'));
+            this.set('view', new SwapView1());
+
             return this;
         },
         attachEvents: function() {

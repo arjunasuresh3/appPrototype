@@ -1,5 +1,5 @@
 {
 "zeView": {
-                "requires" : [ "view" ]
+                "requires" : [ "view", "calendar", "base-build", "datatype-date", "event-outside", "event-focus" ]
           } 
 }
