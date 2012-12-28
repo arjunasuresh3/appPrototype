@@ -7,12 +7,21 @@
   <body>
     <script>
     YUI().use('zeView',function(Y) {
-        var NewView = Y.Base.create('newView',Y.ZeView, [], {
-            template: "<button id='btn1' type='button'>Click Me!</button><button id='btn2' type='button'>Click Me too!</button>",
+        var NewView = Y.Base.create('newView',Y.ZeView, [Y.ContentSwapper], {
+            template: "<button id='btn1' type='button'>Click Me too!</button>",
             events: {
-            '#btn1': {click: '_clickMe'}
-            },
+                         button: {
+                             click: function () {
+                                 this.fire('swap', {which: 'AnotherNewView'})
+                             }
+                         }
+                     },
+//                     {
+//                '#btn1': {click: '_clickMe'}
+//            },
             _clickMe: function(ev){
+                //this.fire('changetoanother')
+                // myView.set('view', new AnotherNewView());
                 console.log(ev);
             },
             _render:  function (container) {
@@ -20,13 +29,23 @@
             }
         });
 
-        var AnotherNewView = Y.Base.create('anothernewView',NewView, [], {
+        var AnotherNewView = Y.Base.create('anothernewView',Y.ZeView, [Y.ContentSwapper,NewView], {
+            template: "<button id='btn2' type='button'>Click Me!</button>",
             events: {
-            '#btn2': {click: '_clickMe2'}
+                        button: {
+                             click: function () {
+                                 this.fire('swap', {which: 'NewView'})
+                             }
+                        }
             },
+//                     {
+//                '#btn1': {click: '_clickMe2'}
+//            },
             _clickMe2: function(ev){
-                console.log("asd");
-                console.log(ev);
+                // this.fire('changetoanotherone')
+
+                myView.set('view', new NewView());
+
                 console.log("asd");
             },
             _render:  function (container) {
@@ -34,8 +53,35 @@
             }
         });
 
-        var myNewView = new AnotherNewView();
-        myNewView.render("#btn");
+        var MyView = Y.Base.create('myView', Y.ZeView, [Y.ContentSwapper], {
+            template: '<p>This is the 1fixed content, next comes the variable part: <div class="variableContent"></div></p>',
+            initializer: function () {
+                         this._eventHandles.push(
+                             this.on('*:swap', this.swap)
+                         );
+                     },
+            swap: function (ev) {
+                         switch (ev.which) {
+                             case 'NewView':
+                                 this.set('swapView', new NewView());
+                                 break;
+                             case 'AnotherNewView':
+                                 this.set('swapView', new AnotherNewView());
+                                 break;
+
+                         }
+                     },
+            _render: function (container) {
+                         container.setHTML(this.template);
+                         this.set('swapContainer', container.one('.variableContent'));
+                     }
+        });
+
+        myView = new MyView();
+        myView.render(Y.one('#btn'));
+
+        myView.set('swapView', new AnotherNewView());
+
         });
     </script>
     <div id="btn">

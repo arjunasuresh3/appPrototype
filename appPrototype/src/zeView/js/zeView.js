@@ -1,7 +1,7 @@
 Y.ZeView = Y.Base.create(
     NAME,
     Y.View,
-    [],
+    [Y.ContentSwapper],
     {
         _eventHandles: null,
         _destroyOnExit: null,
@@ -29,10 +29,7 @@ Y.ZeView = Y.Base.create(
             if (container) {
                 this._render(container);
             }
-
             this.set('swapContainer', container.one('.variableContent'));
-            this.set('view', new SwapView1());
-
             return this;
         },
         attachEvents: function() {
