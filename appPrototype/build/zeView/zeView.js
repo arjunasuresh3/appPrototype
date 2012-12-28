@@ -3,7 +3,7 @@ YUI.add('zeView', function (Y, NAME) {
 var CS = function () {},
 CONTAINER = 'swapContainer',
 VIEW = 'swapView',
-CHANGE = 'Change';
+CHANGE = 'Change', L = Y.Lang;
 
 CS.ATTRS = {
      swapContainer: {
@@ -12,10 +12,11 @@ CS.ATTRS = {
              return value === null || value.constructor.NAME === 'node';
          }
      },
-     view: {
+     swapView: {
          value: null,
          validator: function (value) {
-             return value === null  || value instanceof Y.View;
+             return value === null  || (L.isFunction(value.render) && L.isFunction(value.destroy));
+             // return value === null  || value instanceof Y.View;
          }
      }
 };
@@ -41,7 +42,7 @@ ev.newVal, children;
                      children = prev.get('children');
                      children.each(function (child) {
                          value.appendChild(child);
-                     })
+                     });
                  } else {
                      view.render(value);
                  }
@@ -102,7 +103,6 @@ Y.ContentSwapper = CS;Y.ZeView = Y.Base.create(
             if (container) {
                 this._render(container);
             }
-            this.set('swapContainer', container.one('.variableContent'));
             return this;
         },
         attachEvents: function() {
