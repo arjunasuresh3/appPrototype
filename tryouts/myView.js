@@ -18,6 +18,17 @@ YUI.add('myView', function (Y, NAME) {
                 }
 
                 return this;
+            },
+            attachEvents: function(events) {
+                var cl = this._classes, c, i, ev={};
+                for (i=0;i<cl.length;i++) {
+                    c = cl[i];
+                    if(c.events) {
+                        Y.mix(ev,c.events);
+                    }
+                }
+                
+                Y.MyView.superclass.attachEvents.call(this,ev);    
             }
         }
     );

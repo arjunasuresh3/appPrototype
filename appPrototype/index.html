@@ -1,11 +1,45 @@
 <html>
-
   <head>
-
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="yui/yui/yui.js"></script>
+    <script type="text/javascript" src="yuiConfig.js"></script>
   </head>
-
   <body>
-    
-  </body>
+    <script>
+    YUI().use('zeView',function(Y) {
+        var NewView = Y.Base.create('newView',Y.ZeView, [], {
+            template: "<button id='btn1' type='button'>Click Me!</button><button id='btn2' type='button'>Click Me too!</button>",
+            events: {
+            '#btn1': {click: '_clickMe'}
+            },
+            _clickMe: function(ev){
+                console.log(ev);
+            },
+            _render:  function (container) {
+                container.setHTML(this.template);
+            }
+        });
 
+        var AnotherNewView = Y.Base.create('anothernewView',NewView, [], {
+            events: {
+            '#btn2': {click: '_clickMe2'}
+            },
+            _clickMe2: function(ev){
+                console.log("asd");
+                console.log(ev);
+                console.log("asd");
+            },
+            _render:  function (container) {
+                container.setHTML(this.template);
+            }
+        });
+
+        var myNewView = new AnotherNewView();
+        myNewView.render("#btn");
+        });
+    </script>
+    <div id="btn">
+
+    </div>
+  </body>
 </html>

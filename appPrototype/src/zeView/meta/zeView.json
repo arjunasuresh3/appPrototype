@@ -1,0 +1,5 @@
+{
+"zeView": {
+                "requires" : [ "view" ]
+          } 
+}
