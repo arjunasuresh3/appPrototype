@@ -34,8 +34,7 @@ CS.prototype = {
          );
      },
      _afterSwapContainerChange: function (ev) {
-         var view = this.get(VIEW), prev = ev.prevVal, value = 
-ev.newVal, children;
+         var view = this.get(VIEW), prev = ev.prevVal, value = ev.newVal, children;
          if (view) {
              if (value) {
                  if (prev) {
@@ -72,7 +71,10 @@ ev.newVal, children;
      }
 
 };
-Y.ContentSwapper = CS;Y.ZeView = Y.Base.create(
+Y.ContentSwapper = CS;var each = Y.Array.each,
+     CONT = 'container';
+
+Y.ZeView = Y.Base.create(
     NAME,
     Y.View,
     [Y.ContentSwapper],
@@ -85,36 +87,37 @@ Y.ContentSwapper = CS;Y.ZeView = Y.Base.create(
             this._destroyOnExit = [];
         },
         destructor: function () {
-            Y.Array.each(this._eventHandles,function(h){
-                             h.detach();
-                         });
-            Y.Array.each(this._destroyOnExit,function(h){
-                             h.destroy();
-                         });
+            each(this._eventHandles,function(h) {
+                     h.detach();
+                 });
+            each(this._destroyOnExit,function(h) {
+                     h.destroy();
+                 });
+            var c = this.get(CONT);
+            if (c) {
+                c.setHTML('');
+            }
         },
         render: function (container) {
             container = Y.one(container);
             if (container) {
-                this.set('container', container);
+                this.set(CONT, container);
             } else {
-                container = this.get('container');
+                container = this.get(CONT);
             }
-
             if (container) {
                 this._render(container);
             }
             return this;
         },
         attachEvents: function() {
-            var cl = this._classes, c, i, ev={};
-            for (i=0;i<cl.length;i++) {
-                c = cl[i];
+            var ev = {};
+             each(this._classes, function (c) {
                  if(c.prototype.events) {
-                    Y.mix(ev,c.prototype.events);
-                }
-            }
-            
-            Y.ZeView.superclass.attachEvents.call(this,ev);
+                     Y.mix(ev,c.prototype.events);
+                 }
+             });
+            return Y.ZeView.superclass.attachEvents.call(this,ev);
         }
     }
 );

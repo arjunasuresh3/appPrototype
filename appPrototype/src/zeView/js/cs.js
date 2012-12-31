@@ -32,8 +32,7 @@ CS.prototype = {
          );
      },
      _afterSwapContainerChange: function (ev) {
-         var view = this.get(VIEW), prev = ev.prevVal, value = 
-ev.newVal, children;
+         var view = this.get(VIEW), prev = ev.prevVal, value = ev.newVal, children;
          if (view) {
              if (value) {
                  if (prev) {
