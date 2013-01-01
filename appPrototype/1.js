@@ -1,4 +1,5 @@
-    YUI().use('zeView','datatable', function(Y) {
+    YUI().use('zeView', 'datatable', 'event-custom', function(Y) {
+
         var NewView = Y.Base.create('newView',Y.ZeView, [Y.ContentSwapper], {
             template: "<button id='btn1' type='button'>Click Me NewView!</button><div class='innerContainer'></div>",
             events: {
@@ -61,13 +62,26 @@
             }
         });
 
-        var MyView = Y.Base.create('myView', Y.ZeView, [Y.ContentSwapper], {
-            template: '<p>This is the 1fixed content, next comes the variable part: <div class="variableContent"></div></p>',
+        var MyView = Y.Base.create('myView', Y.ZeView, [Y.ContentSwapper,Y.View.NodeMap], {
+            template: '<p><div class="variableContent"></div></p>',
             initializer: function () {
                          this._eventHandles.push(
                              this.on('*:swap', this.swap)
                          );
+                         this._eventHandles.push(
+                             this.on('*:tabsa', this.handleAnchor)
+                         );
                      },
+            events: {
+                        anchor: {
+                             click: function (e) {
+                                 e.preventDefault();
+                             }
+                        }
+            },
+            handleAnchor: function(ev) {
+              console.log(ev);
+            },
             swap: function (ev) {
                          switch (ev.which) {
                              case 'NewView':
@@ -86,8 +100,24 @@
         });
 
         var myView = new MyView();
-        myView.render(Y.one('#btn'));
+        myView.render(Y.one('#mainContent'));
 
-        myView.set('swapView', new AnotherNewView());
-
+        Y.all(".tabsa").on("click", function (e) {
+              console.log(e);
+              e.preventDefault();
+              if (e.currentTarget._node.id === 'tab1') {
+                  myView.set('swapView', new AnotherNewView());
+              }
+              else if (e.currentTarget._node.id === 'tab2') {
+                  // Y.ZeView.getByNode(Y.one('#mainContent'));
+                  // var myView = new MyView();
+                  // myView.render(Y.one('#mainContent'));
+                  myView.set('swapView', new AnotherNewView());
+              }
+              else { 
+                  // var myView = new MyView();
+                  // myView.render(Y.one('#mainContent'));
+                  myView.set('swapView', new NewView());
+              }
         });
+});

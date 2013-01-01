@@ -77,7 +77,7 @@ Y.ContentSwapper = CS;var each = Y.Array.each,
 Y.ZeView = Y.Base.create(
     NAME,
     Y.View,
-    [Y.ContentSwapper],
+    [Y.ContentSwapper,Y.View.NodeMap],
     {
         _eventHandles: null,
         _destroyOnExit: null,
@@ -122,4 +122,15 @@ Y.ZeView = Y.Base.create(
     }
 );
 
-}, '@VERSION@', {"requires": ["view", "calendar", "base-build", "datatype-date", "event-outside", "event-focus"]});
+}, '@VERSION@', {
+    "requires": [
+        "view",
+        "calendar",
+        "base-build",
+        "datatype-date",
+        "event-outside",
+        "event-focus",
+        "node",
+        "view-node-map"
+    ]
+});
