@@ -3,15 +3,20 @@
         var NewView = Y.Base.create('newView',Y.ZeView, [Y.ContentSwapper], {
             template: "<button id='btn1' type='button'>Click Me NewView!</button><div class='innerContainer'></div>",
             events: {
-                         button: {
-                             click: function () {
-                                 this.fire('swap', {which: 'AnotherNewView'});
-                             }
-                         }
-                     },
-//                     {
-//                '#btn1': {click: '_clickMe'}
-//            },
+                button: {
+                    click: function () {
+                        this.fire('swap', {which: 'AnotherNewView'});
+                    }
+                },
+                '#btn1': {
+                    click: function(ev) {
+                        console.log(ev);
+                    }
+                }
+            },
+            //                     {
+            //                '#btn1': {click: '_clickMe'}
+            //            },
             // _clickMe: function(ev){
             //     //this.fire('changetoanother')
             //     // myView.set('view', new AnotherNewView());
@@ -34,27 +39,24 @@
                 this.set('swapView',table);
                 this._destroyOnExit.push(table);
                //  table.render(container);
-
             }
         });
 
         var AnotherNewView = Y.Base.create('anothernewView',Y.ZeView, [], {
             template: "<button id='btn2' type='button'>Click Me AnotherNewView!</button>",
             events: {
-                        button: {
-                             click: function () {
-                                 this.fire('swap', {which: 'NewView'});
-                             }
-                        }
+                button: {
+                    click: function () {
+                        this.fire('swap', {which: 'NewView'});
+                    }
+                },
+                '#btn2': {
+                    click: function () {
+                        this.fire('swap', {which: 'NewView'});
+                    }
+                }
             },
-//                     {
-//                '#btn1': {click: '_clickMe2'}
-//            },
             _clickMe2: function(ev){
-                // this.fire('changetoanotherone')
-
-                // myView.set('swapView', new NewView());
-
                 console.log("asd");
             },
             _render:  function (container) {
@@ -62,26 +64,13 @@
             }
         });
 
-        var MyView = Y.Base.create('myView', Y.ZeView, [Y.ContentSwapper,Y.View.NodeMap], {
+        var MyView = Y.Base.create('myView', Y.ZeView, [Y.ContentSwapper], {
             template: '<p><div class="variableContent"></div></p>',
             initializer: function () {
                          this._eventHandles.push(
                              this.on('*:swap', this.swap)
                          );
-                         this._eventHandles.push(
-                             this.on('*:tabsa', this.handleAnchor)
-                         );
                      },
-            events: {
-                        anchor: {
-                             click: function (e) {
-                                 e.preventDefault();
-                             }
-                        }
-            },
-            handleAnchor: function(ev) {
-              console.log(ev);
-            },
             swap: function (ev) {
                          switch (ev.which) {
                              case 'NewView':
@@ -90,7 +79,6 @@
                              case 'AnotherNewView':
                                  this.set('swapView', new AnotherNewView());
                                  break;
-
                          }
                      },
             _render: function (container) {
@@ -101,23 +89,21 @@
 
         var myView = new MyView();
         myView.render(Y.one('#mainContent'));
-
-        Y.all(".tabsa").on("click", function (e) {
+                  
+        Y.all(".tabsa").on("click", function(e) {
               console.log(e);
               e.preventDefault();
               if (e.currentTarget._node.id === 'tab1') {
                   myView.set('swapView', new AnotherNewView());
+                  // myView.attachEvents();
               }
               else if (e.currentTarget._node.id === 'tab2') {
-                  // Y.ZeView.getByNode(Y.one('#mainContent'));
-                  // var myView = new MyView();
-                  // myView.render(Y.one('#mainContent'));
                   myView.set('swapView', new AnotherNewView());
+                  // myView.attachEvents();
               }
               else { 
-                  // var myView = new MyView();
-                  // myView.render(Y.one('#mainContent'));
-                  myView.set('swapView', new NewView());
-              }
-        });
+                  var nv = new NewView();
+                  myView.set('swapView', nv);
+                  // nv.attachEvents();
+        }});
 });
