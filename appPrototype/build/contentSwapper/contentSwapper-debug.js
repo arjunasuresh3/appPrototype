@@ -1,3 +1,5 @@
+YUI.add('contentSwapper', function (Y, NAME) {
+
 var CS = function () {},
      isFn = Y.Lang.isFunction,
      each = Y.Array.each;
@@ -67,3 +69,5 @@ CS.prototype = {
 
 };
 Y.ContentSwapper = CS;
+
+}, '@VERSION@', {"requires": ["view", "calendar", "base-build", "datatype-date", "event-outside", "event-focus"]});

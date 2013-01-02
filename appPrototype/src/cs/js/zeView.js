@@ -1,5 +1,3 @@
-YUI.add('zeView', function (Y, NAME) {
-
 var each = Y.Array.each,
      CONT = 'container';
 
@@ -50,15 +48,3 @@ Y.ZeView = Y.Base.create(
         }
     }
 );
-
-}, '@VERSION@', {
-    "requires": [
-        "view",
-        "contentSwapper",
-        "calendar",
-        "base-build",
-        "datatype-date",
-        "event-outside",
-        "event-focus"
-    ]
-});
