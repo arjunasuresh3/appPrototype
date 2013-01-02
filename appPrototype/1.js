@@ -1,4 +1,4 @@
-YUI().use('zeView','datatable','contentSwapper', function(Y) {
+YUI().use('zeView','datatable','contentSwapper', 'autocomplete', 'autocomplete-highlighters', function(Y) {
     var NewView = Y.Base.create('newView',Y.ZeView, [], {
         template: "Click Me NewView<button id='btn1' type='button'>Click Me NewView!</button><div class='innerContainer'></div>",
         events: {
@@ -26,7 +26,7 @@ YUI().use('zeView','datatable','contentSwapper', function(Y) {
     });
 
     var AnotherNewView = Y.Base.create('anothernewView',Y.ZeView, [], {
-        template: "Click Me AnotherNewView<button id='btn2' type='button'>Click Me AnotherNewView!</button>",
+        template: "Click Me AnotherNewView<button id='btn2' type='button'>Click Me AnotherNewView!</button><br>Autocomplete Field: <input id='ac-input' type='text'>",
         events: {
             button: {
                 click: function () {
@@ -40,6 +40,14 @@ YUI().use('zeView','datatable','contentSwapper', function(Y) {
         },
         _render:  function (container) {
             container.setHTML(this.template);
+            var ac = new Y.AutoComplete({
+                                            inputNode: '#ac-input',
+                                            render   : true,
+                                            resultHighlighter: 'phraseMatch',
+                                            source: 'select * from search.suggest where query="{query}"',
+                                            yqlEnv: 'http://pieisgood.org/yql/tables.env'
+                                        });
+            this._destroyOnExit.push(ac);
         }
     });
 
