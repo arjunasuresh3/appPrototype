@@ -47,7 +47,10 @@ Y.ZeView = Y.Base.create(
                  }
              });
             return Y.ZeView.superclass.attachEvents.call(this,ev);
-        }
+        },
+        _getContainer: function (value) {
+            return value;
+         }
     }
 );
 
