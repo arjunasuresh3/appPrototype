@@ -26,7 +26,13 @@ YUI().use('zeView','datatable','contentSwapper', 'autocomplete', 'autocomplete-h
     });
 
     var AnotherNewView = Y.Base.create('anothernewView',Y.ZeView, [], {
-        template: "Click Me AnotherNewView<button id='btn2' type='button'>Click Me AnotherNewView!</button><br>Autocomplete Field: <input id='ac-input' type='text'>",
+        template: 'Click Me AnotherNewView <button id="btn2" type="button">Click Me AnotherNewView!</button>'
+                  + '<div class="acFields">'
+                  + '<br>Autocomplete Field 1: <input id="ac-input1" type="text">'
+                  + '&nbsp;Autocomplete Field 2: <input id="ac-input2" type="text">'
+                  + '<br>Autocomplete Field 3: <input id="ac-input3" type="text">'
+                  + '&nbsp;Autocomplete Field 4: <input id="ac-input4" type="text">'
+                  + '</div>',
         events: {
             button: {
                 click: function () {
@@ -40,19 +46,48 @@ YUI().use('zeView','datatable','contentSwapper', 'autocomplete', 'autocomplete-h
         },
         _render:  function (container) {
             container.setHTML(this.template);
-            var ac = new Y.AutoComplete({
-                                            inputNode: '#ac-input',
-                                            render   : true,
-                                            resultHighlighter: 'phraseMatch',
-                                            source: 'select * from search.suggest where query="{query}"',
-                                            yqlEnv: 'http://pieisgood.org/yql/tables.env'
-                                        });
-            this._destroyOnExit.push(ac);
+            var ac1 = new Y.AutoComplete({
+                                             inputNode: '#ac-input1',
+                                             render   : true,
+                                             resultHighlighter: 'phraseMatch',
+                                             source: 'select * from search.suggest where query="{query}"',
+                                             yqlEnv: 'http://pieisgood.org/yql/tables.env'
+                                         }),
+            ac2 = new Y.AutoComplete({
+                                         inputNode: '#ac-input2',
+                                         render   : true,
+                                         resultHighlighter: 'phraseMatch',
+                                         source: 'select * from search.suggest where query="{query}"',
+                                         yqlEnv: 'http://pieisgood.org/yql/tables.env'
+                                     }),
+            ac3 = new Y.AutoComplete({
+                                         inputNode: '#ac-input3',
+                                         render   : true,
+                                         resultHighlighter: 'phraseMatch',
+                                         source: 'select * from search.suggest where query="{query}"',
+                                         yqlEnv: 'http://pieisgood.org/yql/tables.env'
+                                     }),
+            ac4 = new Y.AutoComplete({
+                                         inputNode: '#ac-input4',
+                                         render   : true,
+                                         resultHighlighter: 'phraseMatch',
+                                         source: 'select * from search.suggest where query="{query}"',
+                                         yqlEnv: 'http://pieisgood.org/yql/tables.env'
+                                     });
+
+            this._destroyOnExit.push(ac1,ac2,ac3,ac4);
+        }
+    });
+
+    var ClearView = Y.Base.create('clearView',Y.ZeView, [], {
+        template: "<p><b>CLEARED ALL THE DOM OBJECTS AND EVENTS :)</p>",
+        _render:  function (container) {
+            container.setHTML(this.template);
         }
     });
 
     var MyView = Y.Base.create('myView', Y.ZeView, [Y.ContentSwapper], {
-        template: '<p>This is the 1fixed content, next comes the variable part:</p><div class="variableContent"></div>',
+        template: '<p border="1">This is the fixed div container, next comes the variable part:</p><div class="variableContent"></div>',
         initializer: function () {
             this._eventHandles.push(
                 this.on('*:swap', this.swap)
@@ -76,12 +111,11 @@ YUI().use('zeView','datatable','contentSwapper', 'autocomplete', 'autocomplete-h
 
     var myView = new MyView();
     myView.render(Y.one('#mainContent'));
-    // myView.set('swapView', new AnotherNewView());
     myView.setSwapView(new NewView(),1);
     Y.all(".tabsa").on("click", function(e) {
         console.log(e);
         if (e.currentTarget._node.id === 'tab1') {
-            myView.setSwapView(new AnotherNewView(),1);
+            myView.setSwapView(new ClearView(),1);
         }
         else if (e.currentTarget._node.id === 'tab2') {
             myView.setSwapView(new AnotherNewView(),1);
