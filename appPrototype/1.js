@@ -1,4 +1,7 @@
-    YUI().use('zeView', 'datatable', 'event-custom', function(Y) {
+    YUI({
+        filter: 'raw',
+        combine: false
+    }).use('zeView', 'datatable', 'event-custom', function(Y) {
 
         var NewView = Y.Base.create('newView',Y.ZeView, [Y.ContentSwapper], {
             template: "<button id='btn1' type='button'>Click Me NewView!</button><div class='innerContainer'></div>",
@@ -26,7 +29,7 @@
             // },
             _render:  function (container) {
             container.setHTML(this.template);
-            this.set('swapContainer', container.one('.innerContainer'));
+            this.setSwapContainer(container.one('.innerContainer'));
 
             var table = new Y.DataTable({
                 columns: ['id', 'name','price','cost'],
@@ -36,7 +39,7 @@
                 { id: "wi-0650", name: "widget",   price: "$4.25", cost: "$3.75" }
                 ]
                 });
-                this.set('swapView',table);
+                this.setSwapView(table);
                 this._destroyOnExit.push(table);
                //  table.render(container);
             }
@@ -74,36 +77,36 @@
             swap: function (ev) {
                          switch (ev.which) {
                              case 'NewView':
-                                 this.set('swapView', new NewView());
+                                 this.setSwapView(new NewView());
                                  break;
                              case 'AnotherNewView':
-                                 this.set('swapView', new AnotherNewView());
+                                 this.setSwapView(new AnotherNewView());
                                  break;
                          }
                      },
             _render: function (container) {
                          container.setHTML(this.template);
-                         this.set('swapContainer', container.one('.variableContent'));
+                         this.setSwapContainer(container.one('.variableContent'));
                      }
         });
 
         var myView = new MyView();
         myView.render(Y.one('#mainContent'));
-                  
+
         Y.all(".tabsa").on("click", function(e) {
               console.log(e);
               e.preventDefault();
               if (e.currentTarget._node.id === 'tab1') {
-                  myView.set('swapView', new AnotherNewView());
+                  myView.setSwapView(new AnotherNewView());
                   // myView.attachEvents();
               }
               else if (e.currentTarget._node.id === 'tab2') {
-                  myView.set('swapView', new AnotherNewView());
+                  myView.setSwapView(new AnotherNewView());
                   // myView.attachEvents();
               }
-              else { 
+              else {
                   var nv = new NewView();
-                  myView.set('swapView', nv);
+                  myView.setSwapView(nv);
                   // nv.attachEvents();
         }});
 });
