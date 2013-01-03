@@ -1,4 +1,4 @@
-YUI().use('zeView','datatable','contentSwapper', 'autocomplete', 'autocomplete-highlighters', function(Y) {
+YUI().use('zeView', 'datatable', 'contentSwapper', 'autocomplete', 'autocomplete-highlighters', function(Y) {
     var NewView = Y.Base.create('newView',Y.ZeView, [], {
         template: "Click Me NewView<button id='btn1' type='button'>Click Me NewView!</button><div class='innerContainer'></div>",
         events: {
