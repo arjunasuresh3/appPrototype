@@ -14,6 +14,18 @@ YUI_config = {
 				'contentSwapper': {
 					path: '/contentSwapper/contentSwapper.js',
 					requires: ["view", "calendar", "base-build", "datatype-date", "event-outside", "event-focus"]
+				},
+				'clearView': {
+					path: '/clearView/clearView.js',
+					requires: ["zeView"]
+				},
+				'anotherNewView': {
+					path: '/anotherNewView/anotherNewView.js',
+					requires: ["zeView"]
+				},
+				'newView': {
+					path: '/newView/newView.js',
+					requires: ["zeView"]
 				}
 			}
 		}
