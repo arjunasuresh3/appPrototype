@@ -26,127 +26,129 @@ _yuitest_coverage["build/zeView/zeView.js"] = {
     path: "build/zeView/zeView.js",
     code: []
 };
-_yuitest_coverage["build/zeView/zeView.js"].code=["YUI.add('zeView', function (Y, NAME) {","","var CS = function () {},","CONTAINER = 'swapContainer',","VIEW = 'swapView',","CHANGE = 'Change', L = Y.Lang;","","CS.ATTRS = {","     swapContainer: {","         value: null,","         validator: function (value) {","             return value === null || value.constructor.NAME === 'node';","         }","     },","     swapView: {","         value: null,","         validator: function (value) {","             return value === null  || (L.isFunction(value.render) && L.isFunction(value.destroy));","             // return value === null  || value instanceof Y.View;","         }","     }","};","","CS.prototype = {","     initializer: function () {","         this._eventHandles.push(","             this.after(CONTAINER + CHANGE, this._afterSwapContainerChange)","         );","         this._eventHandles.push(","             this.after(VIEW + CHANGE, this._afterViewChange)","         );","         this._eventHandles.push(","             this.after('destroy', this._beforeDestroy)","         );","     },","     _afterSwapContainerChange: function (ev) {","         var view = this.get(VIEW), prev = ev.prevVal, value = ev.newVal, children;","         if (view) {","             if (value) {","                 if (prev) {","                     children = prev.get('children');","                     children.each(function (child) {","                         value.appendChild(child);","                     });","                 } else {","                     view.render(value);","                 }","                 view._set('container', value);","             } else {","                 view.destroy();","             }","         }","     },","     _afterViewChange: function (ev) {","         var prev = ev.prevVal, value = ev.newVal;","         if (prev) {","             prev.removeTarget(this);","             prev.destroy();","         }","         var c = this.get(CONTAINER);","         if (c && value) {","             value.render(c);","             value.addTarget(this);","         }","     },","     _beforeDestroy: function () {","         var view = this.get(VIEW);","         if (view) {","             view.destroy();","         }","     }","","};","Y.ContentSwapper = CS;var each = Y.Array.each,","     CONT = 'container';","","Y.ZeView = Y.Base.create(","    NAME,","    Y.View,","    [Y.ContentSwapper,Y.View.NodeMap],","    {","        _eventHandles: null,","        _destroyOnExit: null,","","        initializer: function (){","            this._eventHandles = [];","            this._destroyOnExit = [];","        },","        destructor: function () {","            each(this._eventHandles,function(h) {","                     h.detach();","                 });","            each(this._destroyOnExit,function(h) {","                     h.destroy();","                 });","            var c = this.get(CONT);","            if (c) {","                c.setHTML('');","            }","        },","        render: function (container) {","            container = Y.one(container);","            if (container) {","                this.set(CONT, container);","            } else {","                container = this.get(CONT);","            }","            if (container) {","                this._render(container);","            }","            return this;","        },","        attachEvents: function() {","            var ev = {};","             each(this._classes, function (c) {","                 if(c.prototype.events) {","                     Y.mix(ev,c.prototype.events);","                 }","             });","            return Y.ZeView.superclass.attachEvents.call(this,ev);","        }","    }",");","","}, '@VERSION@', {","    \"requires\": [","        \"view\",","        \"calendar\",","        \"base-build\",","        \"datatype-date\",","        \"event-outside\",","        \"event-focus\",","        \"node\",","        \"view-node-map\"","    ]","});"];
-_yuitest_coverage["build/zeView/zeView.js"].lines = {"1":0,"3":0,"8":0,"12":0,"18":0,"24":0,"26":0,"29":0,"32":0,"37":0,"38":0,"39":0,"40":0,"41":0,"42":0,"43":0,"46":0,"48":0,"50":0,"55":0,"56":0,"57":0,"58":0,"60":0,"61":0,"62":0,"63":0,"67":0,"68":0,"69":0,"74":0,"77":0,"86":0,"87":0,"90":0,"91":0,"93":0,"94":0,"96":0,"97":0,"98":0,"102":0,"103":0,"104":0,"106":0,"108":0,"109":0,"111":0,"114":0,"115":0,"116":0,"117":0,"120":0};
-_yuitest_coverage["build/zeView/zeView.js"].functions = {"validator:11":0,"validator:17":0,"initializer:25":0,"(anonymous 2):42":0,"_afterSwapContainerChange:36":0,"_afterViewChange:54":0,"_beforeDestroy:66":0,"initializer:85":0,"(anonymous 3):90":0,"(anonymous 4):93":0,"destructor:89":0,"render:101":0,"(anonymous 5):115":0,"attachEvents:113":0,"(anonymous 1):1":0};
-_yuitest_coverage["build/zeView/zeView.js"].coveredLines = 53;
-_yuitest_coverage["build/zeView/zeView.js"].coveredFunctions = 15;
+_yuitest_coverage["build/zeView/zeView.js"].code=["YUI.add('zeView', function (Y, NAME) {","","var CS = function () {},","    isFn = Y.Lang.isFunction,","    each = Y.Array.each;","","","CS.prototype = {","    _swapContainer: null,","    _swapView: null,","    initializer: function () {","        this._swapContainer = [];","        this._swapView = [];","        this._eventHandles.push(","            this.after('destroy', this._beforeDestroy)","        );","    },","    setSwapContainer: function (container, index) {","        index = index || 0;","        var prev = this._swapContainer[index],","            view = this._swapView[index],","            children;","        this._swapContainer[index] = container;","        if (view) {","            if (container) {","                if (prev) {","                    children = prev.get('children');","                    children.each(function (child) {","                        container.appendChild(child);","                    });","                } else {","                    view.render(container);","                }","                view._set('container', container);","            } else {","                view.destroy();","            }","        }","        return this;","    },","    getSwapContainer: function (index) {","        return this._swapContainer[index || 0];","    },","    setSwapView: function (view, index) {","        index = index || 0;","        var prev = this._swapView[index],","            c = this._swapContainer[index];","        if (view === null || (isFn(view.render) && isFn(view.destroy))) {","            this._swapView[index] = view;","            if (prev) {","                prev.removeTarget(this);","                prev.destroy();","            }","            if (c && view) {","                view.render(c);","                view.addTarget(this);","            }","        }","        return this;","    },","    getSwapView: function (index) {","        return this._swapView[index || 0];","    },","    _beforeDestroy: function () {","        each(this._swapView, function (view) {","            view.destroy();","        });","    }","","};","Y.ContentSwapper = CS; var each = Y.Array.each,","     CONT = 'container';","","Y.ZeView = Y.Base.create(","    NAME,","    Y.View,","    [Y.ContentSwapper,Y.View.NodeMap],","    {","        _eventHandles: null,","        _destroyOnExit: null,","","        initializer: function (){","            this._eventHandles = [];","            this._destroyOnExit = [];","        },","        destructor: function () {","            each(this._eventHandles,function(h) {","                     h.detach();","                 });","            each(this._destroyOnExit,function(h) {","                     h.destroy();","                 });","            var c = this.get(CONT);","            if (c) {","                c.setHTML('');","            }","        },","        render: function (container) {","            container = Y.one(container);","            if (container) {","                this.set(CONT, container);","            } else {","                container = this.get(CONT);","            }","            if (container) {","                this._render(container);","            }","            return this;","        },","        attachEvents: function() {","            var ev = {};","             each(this._classes, function (c) {","                 if(c.prototype.events) {","                     Y.mix(ev,c.prototype.events);","                 }","             });","            return Y.ZeView.superclass.attachEvents.call(this,ev);","        },","        _getContainer: function (value) {","            return value;","        }","    }",");","","}, '@VERSION@', {","    \"requires\": [","        \"view\",","        \"calendar\",","        \"base-build\",","        \"datatype-date\",","        \"event-outside\",","        \"event-focus\",","        \"node\",","        \"view-node-map\"","    ]","});"];
+_yuitest_coverage["build/zeView/zeView.js"].lines = {"1":0,"3":0,"8":0,"12":0,"13":0,"14":0,"19":0,"20":0,"23":0,"24":0,"25":0,"26":0,"27":0,"28":0,"29":0,"32":0,"34":0,"36":0,"39":0,"42":0,"45":0,"46":0,"48":0,"49":0,"50":0,"51":0,"52":0,"54":0,"55":0,"56":0,"59":0,"62":0,"65":0,"66":0,"71":0,"74":0,"83":0,"84":0,"87":0,"88":0,"90":0,"91":0,"93":0,"94":0,"95":0,"99":0,"100":0,"101":0,"103":0,"105":0,"106":0,"108":0,"111":0,"112":0,"113":0,"114":0,"117":0,"120":0};
+_yuitest_coverage["build/zeView/zeView.js"].functions = {"initializer:11":0,"(anonymous 2):28":0,"setSwapContainer:18":0,"getSwapContainer:41":0,"setSwapView:44":0,"getSwapView:61":0,"(anonymous 3):65":0,"_beforeDestroy:64":0,"initializer:82":0,"(anonymous 4):87":0,"(anonymous 5):90":0,"destructor:86":0,"render:98":0,"(anonymous 6):112":0,"attachEvents:110":0,"_getContainer:119":0,"(anonymous 1):1":0};
+_yuitest_coverage["build/zeView/zeView.js"].coveredLines = 58;
+_yuitest_coverage["build/zeView/zeView.js"].coveredFunctions = 17;
 _yuitest_coverline("build/zeView/zeView.js", 1);
 YUI.add('zeView', function (Y, NAME) {
 
 _yuitest_coverfunc("build/zeView/zeView.js", "(anonymous 1)", 1);
 _yuitest_coverline("build/zeView/zeView.js", 3);
 var CS = function () {},
-CONTAINER = 'swapContainer',
-VIEW = 'swapView',
-CHANGE = 'Change', L = Y.Lang;
+    isFn = Y.Lang.isFunction,
+    each = Y.Array.each;
+
 
 _yuitest_coverline("build/zeView/zeView.js", 8);
-CS.ATTRS = {
-     swapContainer: {
-         value: null,
-         validator: function (value) {
-             _yuitest_coverfunc("build/zeView/zeView.js", "validator", 11);
-_yuitest_coverline("build/zeView/zeView.js", 12);
-return value === null || value.constructor.NAME === 'node';
-         }
-     },
-     swapView: {
-         value: null,
-         validator: function (value) {
-             _yuitest_coverfunc("build/zeView/zeView.js", "validator", 17);
-_yuitest_coverline("build/zeView/zeView.js", 18);
-return value === null  || (L.isFunction(value.render) && L.isFunction(value.destroy));
-             // return value === null  || value instanceof Y.View;
-         }
-     }
-};
-
-_yuitest_coverline("build/zeView/zeView.js", 24);
 CS.prototype = {
-     initializer: function () {
-         _yuitest_coverfunc("build/zeView/zeView.js", "initializer", 25);
-_yuitest_coverline("build/zeView/zeView.js", 26);
+    _swapContainer: null,
+    _swapView: null,
+    initializer: function () {
+        _yuitest_coverfunc("build/zeView/zeView.js", "initializer", 11);
+_yuitest_coverline("build/zeView/zeView.js", 12);
+this._swapContainer = [];
+        _yuitest_coverline("build/zeView/zeView.js", 13);
+this._swapView = [];
+        _yuitest_coverline("build/zeView/zeView.js", 14);
 this._eventHandles.push(
-             this.after(CONTAINER + CHANGE, this._afterSwapContainerChange)
-         );
-         _yuitest_coverline("build/zeView/zeView.js", 29);
-this._eventHandles.push(
-             this.after(VIEW + CHANGE, this._afterViewChange)
-         );
-         _yuitest_coverline("build/zeView/zeView.js", 32);
-this._eventHandles.push(
-             this.after('destroy', this._beforeDestroy)
-         );
-     },
-     _afterSwapContainerChange: function (ev) {
-         _yuitest_coverfunc("build/zeView/zeView.js", "_afterSwapContainerChange", 36);
-_yuitest_coverline("build/zeView/zeView.js", 37);
-var view = this.get(VIEW), prev = ev.prevVal, value = ev.newVal, children;
-         _yuitest_coverline("build/zeView/zeView.js", 38);
+            this.after('destroy', this._beforeDestroy)
+        );
+    },
+    setSwapContainer: function (container, index) {
+        _yuitest_coverfunc("build/zeView/zeView.js", "setSwapContainer", 18);
+_yuitest_coverline("build/zeView/zeView.js", 19);
+index = index || 0;
+        _yuitest_coverline("build/zeView/zeView.js", 20);
+var prev = this._swapContainer[index],
+            view = this._swapView[index],
+            children;
+        _yuitest_coverline("build/zeView/zeView.js", 23);
+this._swapContainer[index] = container;
+        _yuitest_coverline("build/zeView/zeView.js", 24);
 if (view) {
-             _yuitest_coverline("build/zeView/zeView.js", 39);
-if (value) {
-                 _yuitest_coverline("build/zeView/zeView.js", 40);
+            _yuitest_coverline("build/zeView/zeView.js", 25);
+if (container) {
+                _yuitest_coverline("build/zeView/zeView.js", 26);
 if (prev) {
-                     _yuitest_coverline("build/zeView/zeView.js", 41);
+                    _yuitest_coverline("build/zeView/zeView.js", 27);
 children = prev.get('children');
-                     _yuitest_coverline("build/zeView/zeView.js", 42);
+                    _yuitest_coverline("build/zeView/zeView.js", 28);
 children.each(function (child) {
-                         _yuitest_coverfunc("build/zeView/zeView.js", "(anonymous 2)", 42);
-_yuitest_coverline("build/zeView/zeView.js", 43);
-value.appendChild(child);
-                     });
-                 } else {
-                     _yuitest_coverline("build/zeView/zeView.js", 46);
-view.render(value);
-                 }
-                 _yuitest_coverline("build/zeView/zeView.js", 48);
-view._set('container', value);
-             } else {
-                 _yuitest_coverline("build/zeView/zeView.js", 50);
+                        _yuitest_coverfunc("build/zeView/zeView.js", "(anonymous 2)", 28);
+_yuitest_coverline("build/zeView/zeView.js", 29);
+container.appendChild(child);
+                    });
+                } else {
+                    _yuitest_coverline("build/zeView/zeView.js", 32);
+view.render(container);
+                }
+                _yuitest_coverline("build/zeView/zeView.js", 34);
+view._set('container', container);
+            } else {
+                _yuitest_coverline("build/zeView/zeView.js", 36);
 view.destroy();
-             }
-         }
-     },
-     _afterViewChange: function (ev) {
-         _yuitest_coverfunc("build/zeView/zeView.js", "_afterViewChange", 54);
-_yuitest_coverline("build/zeView/zeView.js", 55);
-var prev = ev.prevVal, value = ev.newVal;
-         _yuitest_coverline("build/zeView/zeView.js", 56);
+            }
+        }
+        _yuitest_coverline("build/zeView/zeView.js", 39);
+return this;
+    },
+    getSwapContainer: function (index) {
+        _yuitest_coverfunc("build/zeView/zeView.js", "getSwapContainer", 41);
+_yuitest_coverline("build/zeView/zeView.js", 42);
+return this._swapContainer[index || 0];
+    },
+    setSwapView: function (view, index) {
+        _yuitest_coverfunc("build/zeView/zeView.js", "setSwapView", 44);
+_yuitest_coverline("build/zeView/zeView.js", 45);
+index = index || 0;
+        _yuitest_coverline("build/zeView/zeView.js", 46);
+var prev = this._swapView[index],
+            c = this._swapContainer[index];
+        _yuitest_coverline("build/zeView/zeView.js", 48);
+if (view === null || (isFn(view.render) && isFn(view.destroy))) {
+            _yuitest_coverline("build/zeView/zeView.js", 49);
+this._swapView[index] = view;
+            _yuitest_coverline("build/zeView/zeView.js", 50);
 if (prev) {
-             _yuitest_coverline("build/zeView/zeView.js", 57);
+                _yuitest_coverline("build/zeView/zeView.js", 51);
 prev.removeTarget(this);
-             _yuitest_coverline("build/zeView/zeView.js", 58);
+                _yuitest_coverline("build/zeView/zeView.js", 52);
 prev.destroy();
-         }
-         _yuitest_coverline("build/zeView/zeView.js", 60);
-var c = this.get(CONTAINER);
-         _yuitest_coverline("build/zeView/zeView.js", 61);
-if (c && value) {
-             _yuitest_coverline("build/zeView/zeView.js", 62);
-value.render(c);
-             _yuitest_coverline("build/zeView/zeView.js", 63);
-value.addTarget(this);
-         }
-     },
-     _beforeDestroy: function () {
-         _yuitest_coverfunc("build/zeView/zeView.js", "_beforeDestroy", 66);
-_yuitest_coverline("build/zeView/zeView.js", 67);
-var view = this.get(VIEW);
-         _yuitest_coverline("build/zeView/zeView.js", 68);
-if (view) {
-             _yuitest_coverline("build/zeView/zeView.js", 69);
+            }
+            _yuitest_coverline("build/zeView/zeView.js", 54);
+if (c && view) {
+                _yuitest_coverline("build/zeView/zeView.js", 55);
+view.render(c);
+                _yuitest_coverline("build/zeView/zeView.js", 56);
+view.addTarget(this);
+            }
+        }
+        _yuitest_coverline("build/zeView/zeView.js", 59);
+return this;
+    },
+    getSwapView: function (index) {
+        _yuitest_coverfunc("build/zeView/zeView.js", "getSwapView", 61);
+_yuitest_coverline("build/zeView/zeView.js", 62);
+return this._swapView[index || 0];
+    },
+    _beforeDestroy: function () {
+        _yuitest_coverfunc("build/zeView/zeView.js", "_beforeDestroy", 64);
+_yuitest_coverline("build/zeView/zeView.js", 65);
+each(this._swapView, function (view) {
+            _yuitest_coverfunc("build/zeView/zeView.js", "(anonymous 3)", 65);
+_yuitest_coverline("build/zeView/zeView.js", 66);
 view.destroy();
-         }
-     }
+        });
+    }
 
 };
-_yuitest_coverline("build/zeView/zeView.js", 74);
-Y.ContentSwapper = CS;var each = Y.Array.each,
+_yuitest_coverline("build/zeView/zeView.js", 71);
+Y.ContentSwapper = CS; var each = Y.Array.each,
      CONT = 'container';
 
-_yuitest_coverline("build/zeView/zeView.js", 77);
+_yuitest_coverline("build/zeView/zeView.js", 74);
 Y.ZeView = Y.Base.create(
     NAME,
     Y.View,
@@ -156,69 +158,74 @@ Y.ZeView = Y.Base.create(
         _destroyOnExit: null,
 
         initializer: function (){
-            _yuitest_coverfunc("build/zeView/zeView.js", "initializer", 85);
-_yuitest_coverline("build/zeView/zeView.js", 86);
+            _yuitest_coverfunc("build/zeView/zeView.js", "initializer", 82);
+_yuitest_coverline("build/zeView/zeView.js", 83);
 this._eventHandles = [];
-            _yuitest_coverline("build/zeView/zeView.js", 87);
+            _yuitest_coverline("build/zeView/zeView.js", 84);
 this._destroyOnExit = [];
         },
         destructor: function () {
-            _yuitest_coverfunc("build/zeView/zeView.js", "destructor", 89);
-_yuitest_coverline("build/zeView/zeView.js", 90);
+            _yuitest_coverfunc("build/zeView/zeView.js", "destructor", 86);
+_yuitest_coverline("build/zeView/zeView.js", 87);
 each(this._eventHandles,function(h) {
-                     _yuitest_coverfunc("build/zeView/zeView.js", "(anonymous 3)", 90);
-_yuitest_coverline("build/zeView/zeView.js", 91);
+                     _yuitest_coverfunc("build/zeView/zeView.js", "(anonymous 4)", 87);
+_yuitest_coverline("build/zeView/zeView.js", 88);
 h.detach();
                  });
-            _yuitest_coverline("build/zeView/zeView.js", 93);
+            _yuitest_coverline("build/zeView/zeView.js", 90);
 each(this._destroyOnExit,function(h) {
-                     _yuitest_coverfunc("build/zeView/zeView.js", "(anonymous 4)", 93);
-_yuitest_coverline("build/zeView/zeView.js", 94);
+                     _yuitest_coverfunc("build/zeView/zeView.js", "(anonymous 5)", 90);
+_yuitest_coverline("build/zeView/zeView.js", 91);
 h.destroy();
                  });
-            _yuitest_coverline("build/zeView/zeView.js", 96);
+            _yuitest_coverline("build/zeView/zeView.js", 93);
 var c = this.get(CONT);
-            _yuitest_coverline("build/zeView/zeView.js", 97);
+            _yuitest_coverline("build/zeView/zeView.js", 94);
 if (c) {
-                _yuitest_coverline("build/zeView/zeView.js", 98);
+                _yuitest_coverline("build/zeView/zeView.js", 95);
 c.setHTML('');
             }
         },
         render: function (container) {
-            _yuitest_coverfunc("build/zeView/zeView.js", "render", 101);
-_yuitest_coverline("build/zeView/zeView.js", 102);
+            _yuitest_coverfunc("build/zeView/zeView.js", "render", 98);
+_yuitest_coverline("build/zeView/zeView.js", 99);
 container = Y.one(container);
-            _yuitest_coverline("build/zeView/zeView.js", 103);
+            _yuitest_coverline("build/zeView/zeView.js", 100);
 if (container) {
-                _yuitest_coverline("build/zeView/zeView.js", 104);
+                _yuitest_coverline("build/zeView/zeView.js", 101);
 this.set(CONT, container);
             } else {
-                _yuitest_coverline("build/zeView/zeView.js", 106);
+                _yuitest_coverline("build/zeView/zeView.js", 103);
 container = this.get(CONT);
             }
-            _yuitest_coverline("build/zeView/zeView.js", 108);
+            _yuitest_coverline("build/zeView/zeView.js", 105);
 if (container) {
-                _yuitest_coverline("build/zeView/zeView.js", 109);
+                _yuitest_coverline("build/zeView/zeView.js", 106);
 this._render(container);
             }
-            _yuitest_coverline("build/zeView/zeView.js", 111);
+            _yuitest_coverline("build/zeView/zeView.js", 108);
 return this;
         },
         attachEvents: function() {
-            _yuitest_coverfunc("build/zeView/zeView.js", "attachEvents", 113);
-_yuitest_coverline("build/zeView/zeView.js", 114);
+            _yuitest_coverfunc("build/zeView/zeView.js", "attachEvents", 110);
+_yuitest_coverline("build/zeView/zeView.js", 111);
 var ev = {};
-             _yuitest_coverline("build/zeView/zeView.js", 115);
+             _yuitest_coverline("build/zeView/zeView.js", 112);
 each(this._classes, function (c) {
-                 _yuitest_coverfunc("build/zeView/zeView.js", "(anonymous 5)", 115);
-_yuitest_coverline("build/zeView/zeView.js", 116);
+                 _yuitest_coverfunc("build/zeView/zeView.js", "(anonymous 6)", 112);
+_yuitest_coverline("build/zeView/zeView.js", 113);
 if(c.prototype.events) {
-                     _yuitest_coverline("build/zeView/zeView.js", 117);
+                     _yuitest_coverline("build/zeView/zeView.js", 114);
 Y.mix(ev,c.prototype.events);
                  }
              });
-            _yuitest_coverline("build/zeView/zeView.js", 120);
+            _yuitest_coverline("build/zeView/zeView.js", 117);
 return Y.ZeView.superclass.attachEvents.call(this,ev);
+        },
+        _getContainer: function (value) {
+            _yuitest_coverfunc("build/zeView/zeView.js", "_getContainer", 119);
+_yuitest_coverline("build/zeView/zeView.js", 120);
+return value;
         }
     }
 );

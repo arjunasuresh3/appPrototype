@@ -1,72 +1,69 @@
 var CS = function () {},
-CONTAINER = 'swapContainer',
-VIEW = 'swapView',
-CHANGE = 'Change', L = Y.Lang;
+    isFn = Y.Lang.isFunction,
+    each = Y.Array.each;
 
-CS.ATTRS = {
-     swapContainer: {
-         value: null,
-         validator: function (value) {
-             return value === null || value.constructor.NAME === 'node';
-         }
-     },
-     swapView: {
-         value: null,
-         validator: function (value) {
-             return value === null  || (L.isFunction(value.render) && L.isFunction(value.destroy));
-             // return value === null  || value instanceof Y.View;
-         }
-     }
-};
 
 CS.prototype = {
-     initializer: function () {
-         this._eventHandles.push(
-             this.after(CONTAINER + CHANGE, this._afterSwapContainerChange)
-         );
-         this._eventHandles.push(
-             this.after(VIEW + CHANGE, this._afterViewChange)
-         );
-         this._eventHandles.push(
-             this.after('destroy', this._beforeDestroy)
-         );
-     },
-     _afterSwapContainerChange: function (ev) {
-         var view = this.get(VIEW), prev = ev.prevVal, value = ev.newVal, children;
-         if (view) {
-             if (value) {
-                 if (prev) {
-                     children = prev.get('children');
-                     children.each(function (child) {
-                         value.appendChild(child);
-                     });
-                 } else {
-                     view.render(value);
-                 }
-                 view._set('container', value);
-             } else {
-                 view.destroy();
-             }
-         }
-     },
-     _afterViewChange: function (ev) {
-         var prev = ev.prevVal, value = ev.newVal;
-         if (prev) {
-             prev.removeTarget(this);
-             prev.destroy();
-         }
-         var c = this.get(CONTAINER);
-         if (c && value) {
-             value.render(c);
-             value.addTarget(this);
-         }
-     },
-     _beforeDestroy: function () {
-         var view = this.get(VIEW);
-         if (view) {
-             view.destroy();
-         }
-     }
+    _swapContainer: null,
+    _swapView: null,
+    initializer: function () {
+        this._swapContainer = [];
+        this._swapView = [];
+        this._eventHandles.push(
+            this.after('destroy', this._beforeDestroy)
+        );
+    },
+    setSwapContainer: function (container, index) {
+        index = index || 0;
+        var prev = this._swapContainer[index],
+            view = this._swapView[index],
+            children;
+        this._swapContainer[index] = container;
+        if (view) {
+            if (container) {
+                if (prev) {
+                    children = prev.get('children');
+                    children.each(function (child) {
+                        container.appendChild(child);
+                    });
+                } else {
+                    view.render(container);
+                }
+                view._set('container', container);
+            } else {
+                view.destroy();
+            }
+        }
+        return this;
+    },
+    getSwapContainer: function (index) {
+        return this._swapContainer[index || 0];
+    },
+    setSwapView: function (view, index) {
+        index = index || 0;
+        var prev = this._swapView[index],
+            c = this._swapContainer[index];
+        if (view === null || (isFn(view.render) && isFn(view.destroy))) {
+            this._swapView[index] = view;
+            if (prev) {
+                prev.removeTarget(this);
+                prev.destroy();
+            }
+            if (c && view) {
+                view.render(c);
+                view.addTarget(this);
+            }
+        }
+        return this;
+    },
+    getSwapView: function (index) {
+        return this._swapView[index || 0];
+    },
+    _beforeDestroy: function () {
+        each(this._swapView, function (view) {
+            view.destroy();
+        });
+    }
 
 };
-Y.ContentSwapper = CS;
+Y.ContentSwapper = CS; 
