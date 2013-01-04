@@ -4,7 +4,7 @@ var each = Y.Array.each,
 Y.ZeView = Y.Base.create(
     NAME,
     Y.View,
-    [Y.ContentSwapper],
+    [Y.ContentSwapper,Y.View.NodeMap],
     {
         _eventHandles: null,
         _destroyOnExit: null,
@@ -48,6 +48,6 @@ Y.ZeView = Y.Base.create(
         },
         _getContainer: function (value) {
             return value;
-         }
+        }
     }
 );
