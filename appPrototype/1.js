@@ -1,7 +1,7 @@
 YUI().use('zeView', 'contentSwapper', function(Y) {
 
     var MyView = Y.Base.create('myView', Y.ZeView, [Y.ContentSwapper], {
-        template: '<p border="1">This is the fixed div container, next comes the variable part:</p><div class="variableContent"></div><div class="mainPanels"></div>',
+        template: '<p border="1">This is the fixed div container, next comes the variable part:</p><div class="variableContent"></div><div id="mainPanels"></div>',
         initializer: function () {
             this._eventHandles.push(
                 this.on('*:swap', this.swap)
@@ -24,7 +24,7 @@ YUI().use('zeView', 'contentSwapper', function(Y) {
         _render: function (container) {
             container.setHTML(this.template);
             this.setSwapContainer(container.one('.variableContent'),1);
-            this.setSwapContainer(Y.one('.mainPanels'),2);
+            // this.setSwapContainer(container.one('.mainPanels'),2);
         }
     });
 
@@ -54,12 +54,14 @@ YUI().use('zeView', 'contentSwapper', function(Y) {
         }
         else if (e.currentTarget._node.id === 'tab4') {
             Y.use("modalView",function(){
-                      myView.setSwapView(new Y.ModalView(),2);       
+                      var mov = new Y.ModalView();
+                      mov.render('#mainPanels');
                   });
         }
         else { 
             Y.use("mypanelView",function(){
-                      myView.setSwapView(new Y.MyPanelView(),2);       
+                      var mpv = new Y.MyPanelView();
+                      mpv.render('#mainPanels');
                   });
         }
     });

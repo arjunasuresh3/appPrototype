@@ -44,11 +44,12 @@ var ModalView = Y.Base.create('modalView',Y.ZeView, [], {
                                                                   width   : 400,
                                                                   centered: true,
                                                                   render  : true,
-                                                                  modal  : true
+                                                                  modal  : true,
+                                                                  zIndex  : 5
                                                               });
                                       panel.set('headerContent','Modal');
-                                      panel.set('bodyContent',container);
-                                      this._destroyOnExit.push(ac5,ac6,ac7,ac8);
+                                      panel.set('bodyContent',container.getHTML());
+                                      // this._destroyOnExit.push(ac5,ac6,ac7,ac8);
                                   }
                               });
 
