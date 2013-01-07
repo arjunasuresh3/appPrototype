@@ -26,7 +26,7 @@ _yuitest_coverage["build/zeView/zeView.js"] = {
     path: "build/zeView/zeView.js",
     code: []
 };
-_yuitest_coverage["build/zeView/zeView.js"].code=["YUI.add('zeView', function (Y, NAME) {","","var each = Y.Array.each,","     CONT = 'container';","","Y.ZeView = Y.Base.create(","    NAME,","    Y.View,","    [Y.ContentSwapper,Y.View.NodeMap],","    {","        _eventHandles: null,","        _destroyOnExit: null,","","        initializer: function (){","            this._eventHandles = [];","            this._destroyOnExit = [];","        },","        destructor: function () {","            each(this._eventHandles,function(h) {","                     h.detach();","                 });","            each(this._destroyOnExit,function(h) {","                     h.destroy();","                 });","            var c = this.get(CONT);","            if (c) {","                c.setHTML('');","            }","        },","        render: function (container) {","            container = Y.one(container);","            if (container) {","                this.set(CONT, container);","            } else {","                container = this.get(CONT);","            }","            if (container) {","                this._render(container);","            }","            return this;","        },","        attachEvents: function() {","            var ev = {};","             each(this._classes, function (c) {","                 if(c.prototype.events) {","                     Y.mix(ev,c.prototype.events);","                 }","             });","            return Y.ZeView.superclass.attachEvents.call(this,ev);","        },","        _getContainer: function (value) {","            return value;","        }","    }",");","","}, '@VERSION@', {","    \"requires\": [","        \"view\",","        \"contentSwapper\",","        \"calendar\",","        \"base-build\",","        \"datatype-date\",","        \"event-outside\",","        \"event-focus\",","        \"view-node-map\"","    ]","});"];
+_yuitest_coverage["build/zeView/zeView.js"].code=["YUI.add('zeView', function (Y, NAME) {","","var each = Y.Array.each,","     CONT = 'container';","","Y.ZeView = Y.Base.create(","    NAME,","    Y.View,","    [Y.ContentSwapper],","    {","        _eventHandles: null,","        _destroyOnExit: null,","","        initializer: function (){","            this._eventHandles = [];","            this._destroyOnExit = [];","        },","        destructor: function () {","            each(this._eventHandles,function(h) {","                     h.detach();","                 });","            each(this._destroyOnExit,function(h) {","                     h.destroy();","                 });","            var c = this.get(CONT);","            if (c) {","                c.setHTML('');","            }","        },","        render: function (container) {","            container = Y.one(container);","            if (container) {","                this.set(CONT, container);","            } else {","                container = this.get(CONT);","            }","            if (container) {","                this._render(container);","            }","            return this;","        },","        attachEvents: function() {","            var ev = {};","             each(this._classes, function (c) {","                 if(c.prototype.events) {","                     Y.mix(ev,c.prototype.events);","                 }","             });","            return Y.ZeView.superclass.attachEvents.call(this,ev);","        },","        _getContainer: function (value) {","            return value;","        }","    }",");","","}, '@VERSION@', {","    \"requires\": [","        \"view\",","        \"contentSwapper\",","        \"calendar\",","        \"base-build\",","        \"datatype-date\",","        \"event-outside\",","        \"event-focus\"","    ]","});"];
 _yuitest_coverage["build/zeView/zeView.js"].lines = {"1":0,"3":0,"6":0,"15":0,"16":0,"19":0,"20":0,"22":0,"23":0,"25":0,"26":0,"27":0,"31":0,"32":0,"33":0,"35":0,"37":0,"38":0,"40":0,"43":0,"44":0,"45":0,"46":0,"49":0,"52":0};
 _yuitest_coverage["build/zeView/zeView.js"].functions = {"initializer:14":0,"(anonymous 2):19":0,"(anonymous 3):22":0,"destructor:18":0,"render:30":0,"(anonymous 4):44":0,"attachEvents:42":0,"_getContainer:51":0,"(anonymous 1):1":0};
 _yuitest_coverage["build/zeView/zeView.js"].coveredLines = 25;
@@ -43,7 +43,7 @@ _yuitest_coverline("build/zeView/zeView.js", 6);
 Y.ZeView = Y.Base.create(
     NAME,
     Y.View,
-    [Y.ContentSwapper,Y.View.NodeMap],
+    [Y.ContentSwapper],
     {
         _eventHandles: null,
         _destroyOnExit: null,
@@ -129,7 +129,6 @@ return value;
         "base-build",
         "datatype-date",
         "event-outside",
-        "event-focus",
-        "view-node-map"
+        "event-focus"
     ]
 });

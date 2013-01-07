@@ -6,7 +6,7 @@ var each = Y.Array.each,
 Y.ZeView = Y.Base.create(
     NAME,
     Y.View,
-    [Y.ContentSwapper,Y.View.NodeMap],
+    [Y.ContentSwapper],
     {
         _eventHandles: null,
         _destroyOnExit: null,
@@ -62,7 +62,6 @@ Y.ZeView = Y.Base.create(
         "base-build",
         "datatype-date",
         "event-outside",
-        "event-focus",
-        "view-node-map"
+        "event-focus"
     ]
 });

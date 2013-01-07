@@ -15,6 +15,16 @@
             "jsfiles": [
                 "newView.js"
             ]
+        },
+	"mypanelView": {
+            "jsfiles": [
+                "mypanelView.js"
+            ]
+        },
+	"modalView": {
+            "jsfiles": [
+                "modalView.js"
+            ]
         }
     }
 }

@@ -26,6 +26,14 @@ YUI_config = {
 				'newView': {
 					path: '/newView/newView.js',
 					requires: ["zeView"]
+				},
+				'mypanelView': {
+					path: '/mypanelView/mypanelView.js',
+					requires: ["zeView"]
+				},
+				'modalView': {
+					path: '/modalView/modalView.js',
+					requires: ["zeView"]
 				}
 			}
 		}
