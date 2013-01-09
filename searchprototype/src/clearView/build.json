@@ -1,0 +1,40 @@
+{
+    "name": "clearView",
+    "builds": {
+        "clearView": {
+            "jsfiles": [
+                "clearView.js"
+            ]
+        },
+	"anotherNewView": {
+            "jsfiles": [
+                "anotherNewView.js"
+            ]
+        },
+	"newView": {
+            "jsfiles": [
+                "newView.js"
+            ]
+        },
+	"mypanelView": {
+            "jsfiles": [
+                "mypanelView.js"
+            ]
+        },
+	"modalView": {
+            "jsfiles": [
+                "modalView.js"
+            ]
+        },
+	"memsearchView": {
+            "jsfiles": [
+                "mem_search.js"
+            ]
+        },
+	"modelsyncZope": {
+            "jsfiles": [
+                "ModelSyncZope.js"
+            ]
+        }
+    }
+}
