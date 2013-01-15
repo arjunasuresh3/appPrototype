@@ -58,7 +58,7 @@ var tmplpage = '<fieldset>\
     },
     _render: function(container) {
       container.setHTML(this.template);
-      this.setSwapContainer(container.one('.results'),1);
+      this.setSwapContainer(container.one('.results'),0);
 
       Y.one('#ac-input').plug(Y.Plugin.AutoComplete, {
         source: 'select * from search.suggest where query="{query}"',
@@ -98,7 +98,7 @@ var tmplpage = '<fieldset>\
                               table.on('render',function (ev) {
                                            Y.one('.resultsfieldset').setStyle('display','');
                                        });
-                              _this.setSwapView(table,1);
+                              _this.setSwapView(table,0);
                               _this._tables.push(table);
                           });
                 });
