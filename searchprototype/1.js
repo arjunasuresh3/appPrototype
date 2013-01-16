@@ -1,7 +1,7 @@
 YUI().use('zeView', 'contentSwapper', function(Y) {
 
     var MyView = Y.Base.create('myView', Y.ZeView, [Y.ContentSwapper], {
-        template: '<p border="1">This is the fixed div container, next comes the variable part:</p><div class="variableContent"></div><div id="mainPanels" style="display:none"></div>',
+        template: '<p border="1">This is the fixed div container, next comes the variable part:</p><div class="variableContent"></div><div class="mainPanels"></div><div class="modalPanels"></div>',
         initializer: function () {
             this._eventHandles.push(
                 this.on('*:swap', this.swap)
@@ -25,6 +25,7 @@ YUI().use('zeView', 'contentSwapper', function(Y) {
             container.setHTML(this.template);
             this.setSwapContainer(container.one('.variableContent'),1);
             this.setSwapContainer(container.one('.mainPanels'),2);
+            this.setSwapContainer(container.one('.modalPanels'),3);
         }
     });
 
@@ -40,6 +41,8 @@ YUI().use('zeView', 'contentSwapper', function(Y) {
         if (e.currentTarget._node.id === 'tab1') {
             Y.use("clearView",function(){
                       myView.setSwapView(new Y.ClearView(),1);       
+                      // myView.setSwapView(new Y.ClearView({template:''}),2);       
+                      // myView.setSwapView(new Y.ClearView({template:''}),3);       
                   });
         }
         else if (e.currentTarget._node.id === 'tab2') {
@@ -54,14 +57,16 @@ YUI().use('zeView', 'contentSwapper', function(Y) {
         }
         else if (e.currentTarget._node.id === 'tab4') {
             Y.use("modalView",function(){
-                      var mov = new Y.ModalView();
-                      mov.render('#mainPanels');
+                      var mod = new Y.ModalView({container:'#modalPanels'});
+                      myView.setSwapView(mod,3);
+                      // mod.showPanel();
                   });
         }
         else if (e.currentTarget._node.id === 'tab5') {
             Y.use("mypanelView", function() {
-                      var mpv = new Y.MyPanelView();
-                      mpv.render('#mainPanels');
+                      var pan = new Y.MyPanelView({container:'#mainPanelContainer'});
+                      myView.setSwapView(pan,2);
+                      pan.regpanels[0].focus();
                   });
         }
         else { 

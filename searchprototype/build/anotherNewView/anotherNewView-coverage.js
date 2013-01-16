@@ -26,11 +26,11 @@ _yuitest_coverage["build/anotherNewView/anotherNewView.js"] = {
     path: "build/anotherNewView/anotherNewView.js",
     code: []
 };
-_yuitest_coverage["build/anotherNewView/anotherNewView.js"].code=["YUI.add('anotherNewView', function (Y, NAME) {","","var AnotherNewView = Y.Base.create('anothernewView',Y.ZeView, [], {","                                       template: 'Click Me AnotherNewView <button id=\"btn2\" type=\"button\">Click Me AnotherNewView!</button>'","                                           + '<div class=\"acFields\">'","                                           + '<br>Autocomplete Field 1: <input id=\"ac-input1\" type=\"text\">'","                                           + '&nbsp;Autocomplete Field 2: <input id=\"ac-input2\" type=\"text\">'","                                           + '<br>Autocomplete Field 3: <input id=\"ac-input3\" type=\"text\">'","                                           + '&nbsp;Autocomplete Field 4: <input id=\"ac-input4\" type=\"text\">'","                                           + '</div>',","                                       events: {","                                           button: {","                                               click: function () {","                                                   this.fire('swap', {which: 'NewView',","                                                                      view: this});","                                               }","                                           }","                                       },","                                       _clickMe2: function(ev){","                                           console.log(\"asd\");","                                       },","                                       _render:  function (container) {","                                           container.setHTML(this.template);","                                           var ac1 = new Y.AutoComplete({","                                                                            inputNode: '#ac-input1',","                                                                            render   : true,","                                                                            resultHighlighter: 'phraseMatch',","                                                                            source: 'select * from search.suggest where query=\"{query}\"',","                                                                            yqlEnv: 'http://pieisgood.org/yql/tables.env'","                                                                        }),","                                           ac2 = new Y.AutoComplete({","                                                                        inputNode: '#ac-input2',","                                                                        render   : true,","                                                                        resultHighlighter: 'phraseMatch',","                                                                        source: 'select * from search.suggest where query=\"{query}\"',","                                                                        yqlEnv: 'http://pieisgood.org/yql/tables.env'","                                                                    }),","                                           ac3 = new Y.AutoComplete({","                                                                        inputNode: '#ac-input3',","                                                                        render   : true,","                                                                        resultHighlighter: 'phraseMatch',","                                                                        source: 'select * from search.suggest where query=\"{query}\"',","                                                                        yqlEnv: 'http://pieisgood.org/yql/tables.env'","                                                                    }),","                                           ac4 = new Y.AutoComplete({","                                                                        inputNode: '#ac-input4',","                                                                        render   : true,","                                                                        resultHighlighter: 'phraseMatch',","                                                                        source: 'select * from search.suggest where query=\"{query}\"',","                                                                        yqlEnv: 'http://pieisgood.org/yql/tables.env'","                                                                    });","","                                           this._destroyOnExit.push(ac1,ac2,ac3,ac4);","                                       }","                                   });","","Y.AnotherNewView = AnotherNewView;","","}, '@VERSION@', {\"requires\": [\"zeView\", \"datatable\", \"contentSwapper\", \"autocomplete\", \"autocomplete-highlighters\"]});"];
-_yuitest_coverage["build/anotherNewView/anotherNewView.js"].lines = {"1":0,"3":0,"14":0,"20":0,"23":0,"24":0,"53":0,"57":0};
-_yuitest_coverage["build/anotherNewView/anotherNewView.js"].functions = {"click:13":0,"_clickMe2:19":0,"_render:22":0,"(anonymous 1):1":0};
-_yuitest_coverage["build/anotherNewView/anotherNewView.js"].coveredLines = 8;
-_yuitest_coverage["build/anotherNewView/anotherNewView.js"].coveredFunctions = 4;
+_yuitest_coverage["build/anotherNewView/anotherNewView.js"].code=["YUI.add('anotherNewView', function (Y, NAME) {","","var AnotherNewView = Y.Base.create('anothernewView',Y.ZeView, [], {","                                       template: 'Click Me AnotherNewView <button id=\"btn2\" type=\"button\">Click Me AnotherNewView!</button>'","                                           + '<div class=\"acFields\">'","                                           + '<br>Autocomplete Field 1: <input class=\"acFields\" id=\"ac-input1\" type=\"text\">'","                                           + '&nbsp;Autocomplete Field 2: <input class=\"acFields\" id=\"ac-input2\" type=\"text\">'","                                           + '<br>Autocomplete Field 3: <input class=\"acFields\" id=\"ac-input3\" type=\"text\">'","                                           + '&nbsp;Autocomplete Field 4: <input class=\"acFields\" id=\"ac-input4\" type=\"text\">'","                                           + '</div>',","                                       events: {","                                           button: {","                                               click: function () {","                                                   this.fire('swap', {which: 'NewView',","                                                                      view: this});","                                               }","                                           }","                                       },","                                       _clickMe2: function(ev){","                                           console.log(\"asd\");","                                       },","                                       _render:  function (container) {","                                           container.setHTML(this.template);","                                           var _this = this,","                                           acFields = container.all('input.acFields');","                                           acFields.each(function(eachacField) {","                                                             var ac = new Y.AutoComplete({","                                                                                              inputNode: eachacField,","                                                                                              render   : true,","                                                                                              resultHighlighter: 'phraseMatch',","                                                                                              source: 'select * from search.suggest where query=\"{query}\"',","                                                                                              yqlEnv: 'http://pieisgood.org/yql/tables.env'","                                                                                          });","                                                             _this._destroyOnExit.push(ac);","                                                         });","                                       }","                                   });","","Y.AnotherNewView = AnotherNewView;","","}, '@VERSION@', {\"requires\": [\"zeView\", \"datatable\", \"contentSwapper\", \"autocomplete\", \"autocomplete-highlighters\"]});"];
+_yuitest_coverage["build/anotherNewView/anotherNewView.js"].lines = {"1":0,"3":0,"14":0,"20":0,"23":0,"24":0,"26":0,"27":0,"34":0,"39":0};
+_yuitest_coverage["build/anotherNewView/anotherNewView.js"].functions = {"click:13":0,"_clickMe2:19":0,"(anonymous 2):26":0,"_render:22":0,"(anonymous 1):1":0};
+_yuitest_coverage["build/anotherNewView/anotherNewView.js"].coveredLines = 10;
+_yuitest_coverage["build/anotherNewView/anotherNewView.js"].coveredFunctions = 5;
 _yuitest_coverline("build/anotherNewView/anotherNewView.js", 1);
 YUI.add('anotherNewView', function (Y, NAME) {
 
@@ -39,10 +39,10 @@ _yuitest_coverline("build/anotherNewView/anotherNewView.js", 3);
 var AnotherNewView = Y.Base.create('anothernewView',Y.ZeView, [], {
                                        template: 'Click Me AnotherNewView <button id="btn2" type="button">Click Me AnotherNewView!</button>'
                                            + '<div class="acFields">'
-                                           + '<br>Autocomplete Field 1: <input id="ac-input1" type="text">'
-                                           + '&nbsp;Autocomplete Field 2: <input id="ac-input2" type="text">'
-                                           + '<br>Autocomplete Field 3: <input id="ac-input3" type="text">'
-                                           + '&nbsp;Autocomplete Field 4: <input id="ac-input4" type="text">'
+                                           + '<br>Autocomplete Field 1: <input class="acFields" id="ac-input1" type="text">'
+                                           + '&nbsp;Autocomplete Field 2: <input class="acFields" id="ac-input2" type="text">'
+                                           + '<br>Autocomplete Field 3: <input class="acFields" id="ac-input3" type="text">'
+                                           + '&nbsp;Autocomplete Field 4: <input class="acFields" id="ac-input4" type="text">'
                                            + '</div>',
                                        events: {
                                            button: {
@@ -64,41 +64,26 @@ console.log("asd");
 _yuitest_coverline("build/anotherNewView/anotherNewView.js", 23);
 container.setHTML(this.template);
                                            _yuitest_coverline("build/anotherNewView/anotherNewView.js", 24);
-var ac1 = new Y.AutoComplete({
-                                                                            inputNode: '#ac-input1',
-                                                                            render   : true,
-                                                                            resultHighlighter: 'phraseMatch',
-                                                                            source: 'select * from search.suggest where query="{query}"',
-                                                                            yqlEnv: 'http://pieisgood.org/yql/tables.env'
-                                                                        }),
-                                           ac2 = new Y.AutoComplete({
-                                                                        inputNode: '#ac-input2',
-                                                                        render   : true,
-                                                                        resultHighlighter: 'phraseMatch',
-                                                                        source: 'select * from search.suggest where query="{query}"',
-                                                                        yqlEnv: 'http://pieisgood.org/yql/tables.env'
-                                                                    }),
-                                           ac3 = new Y.AutoComplete({
-                                                                        inputNode: '#ac-input3',
-                                                                        render   : true,
-                                                                        resultHighlighter: 'phraseMatch',
-                                                                        source: 'select * from search.suggest where query="{query}"',
-                                                                        yqlEnv: 'http://pieisgood.org/yql/tables.env'
-                                                                    }),
-                                           ac4 = new Y.AutoComplete({
-                                                                        inputNode: '#ac-input4',
-                                                                        render   : true,
-                                                                        resultHighlighter: 'phraseMatch',
-                                                                        source: 'select * from search.suggest where query="{query}"',
-                                                                        yqlEnv: 'http://pieisgood.org/yql/tables.env'
-                                                                    });
-
-                                           _yuitest_coverline("build/anotherNewView/anotherNewView.js", 53);
-this._destroyOnExit.push(ac1,ac2,ac3,ac4);
+var _this = this,
+                                           acFields = container.all('input.acFields');
+                                           _yuitest_coverline("build/anotherNewView/anotherNewView.js", 26);
+acFields.each(function(eachacField) {
+                                                             _yuitest_coverfunc("build/anotherNewView/anotherNewView.js", "(anonymous 2)", 26);
+_yuitest_coverline("build/anotherNewView/anotherNewView.js", 27);
+var ac = new Y.AutoComplete({
+                                                                                              inputNode: eachacField,
+                                                                                              render   : true,
+                                                                                              resultHighlighter: 'phraseMatch',
+                                                                                              source: 'select * from search.suggest where query="{query}"',
+                                                                                              yqlEnv: 'http://pieisgood.org/yql/tables.env'
+                                                                                          });
+                                                             _yuitest_coverline("build/anotherNewView/anotherNewView.js", 34);
+_this._destroyOnExit.push(ac);
+                                                         });
                                        }
                                    });
 
-_yuitest_coverline("build/anotherNewView/anotherNewView.js", 57);
+_yuitest_coverline("build/anotherNewView/anotherNewView.js", 39);
 Y.AnotherNewView = AnotherNewView;
 
 }, '@VERSION@', {"requires": ["zeView", "datatable", "contentSwapper", "autocomplete", "autocomplete-highlighters"]});
