@@ -1,6 +1,9 @@
 YUI.add('modalView', function (Y, NAME) {
 
 var ModalView = Y.Base.create('modalView',Y.ZeView, [], {
+                                  initializer:  function (container) {
+                                      this.regmodals = [];
+                                  },
                                   template: '<div class="acFields">'
                                       + '<br>Autocomplete Field 1: <input class="acFieldsPanel" id="ac-input5" type="text">'
                                       + 'Autocomplete Field 2: <input class="acFieldsPanel" id="ac-input6" type="text">'
@@ -28,10 +31,12 @@ var ModalView = Y.Base.create('modalView',Y.ZeView, [], {
                                                                   width   : 400,
                                                                   centered: true,
                                                                   render  : true,
-                                                                  modal  : true
-                                                                  // zIndex  : 5
+                                                                  modal  : true,
+                                                                  zIndex  : 5
                                                               });
                                       panel.set('headerContent','Modal');
+
+                                      this.regmodals.push(panel);
                                   }
                               });
 

@@ -57,16 +57,26 @@ YUI().use('zeView', 'contentSwapper', function(Y) {
         }
         else if (e.currentTarget._node.id === 'tab4') {
             Y.use("modalView",function(){
-                      var mod = new Y.ModalView({container:'#modalPanels'});
-                      myView.setSwapView(mod,3);
-                      // mod.showPanel();
+                      var oldModal = myView.getSwapView(3);
+                      if(oldModal === undefined) {
+                          var mod = new Y.ModalView();
+                          myView.setSwapView(mod,3);
+                      }
+                      else {
+                          oldModal.regmodals[0].show();                          
+                      }
                   });
         }
         else if (e.currentTarget._node.id === 'tab5') {
             Y.use("mypanelView", function() {
-                      var pan = new Y.MyPanelView({container:'#mainPanelContainer'});
-                      myView.setSwapView(pan,2);
-                      pan.regpanels[0].focus();
+                      var oldPanel = myView.getSwapView(2);
+                      if(oldPanel === undefined) {
+                          var pan = new Y.MyPanelView();
+                          myView.setSwapView(pan,2);
+                      }
+                      else {
+                          oldPanel.regpanels[0].show();                          
+                      }
                   });
         }
         else { 

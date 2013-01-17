@@ -1,4 +1,4 @@
-var MyPanelView = Y.Base.create('mypanelView',Y.View, [], {
+var MyPanelView = Y.Base.create('mypanelView',Y.ZeView, [], {
                                   initializer:  function (container) {
                                       this.regpanels = [];
                                   },
@@ -10,7 +10,7 @@ var MyPanelView = Y.Base.create('mypanelView',Y.View, [], {
                                       + '</div>',
                                   events: {
                                   },
-                                  render:  function (container) {
+                                  _render: function (container) {
                                       container.setHTML(this.template);
                                       var _this = this,
                                       acFields = container.all('input.acFieldsPanel');
@@ -26,26 +26,18 @@ var MyPanelView = Y.Base.create('mypanelView',Y.View, [], {
                                                     });
 
                                       var regpanel = new Y.Panel({
-                                                                  srcNode: container,
-                                                                  width   : 400,
-                                                                  centered: true,
-                                                                  render  : true,
-                                                                  zIndex : 5
-                                                              });
-
-                                      // regpanel.plug(Y.Plugin.Resize);
-                                      regpanel.plug(Y.Plugin.Drag);
-                                      regpanel.set('headerContent','Panel');
-                                      // regpanel.render(container.one('#insidePanelContainer'));
+                                                                     srcNode: container,
+                                                                     width   : 400,
+                                                                     centered: true,
+                                                                     render  : true,
+                                                                     zIndex : 5,
+                                                                     headerContent : 'Panel'
+                                                              }).plug(Y.Plugin.Drag).plug(Y.Plugin.Resize);
+                                      // regpanel.plug(Y.Plugin.Drag);
+                                      // regpanel.setStdModContent(Y.WidgetStdMod.BODY,container);
+                                      // regpanel.set('bodyContent', container.getHTML());
                                       this.regpanels.push(regpanel);
-                                  }// ,
-                                  // destroy: function() {
-                                  //     Y.Array.each(this.regpanels,function(pan) {
-                                  //                      pan.destroy(true);
-                                  //                      console.log('destroy');
-                                  //                  });
-                                  //     // Y.one('#insidePanelContainer').setHTML('');
-                                  //  }
+                                  }
                               });
 
 Y.MyPanelView = MyPanelView;
