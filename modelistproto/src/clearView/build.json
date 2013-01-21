@@ -40,6 +40,11 @@
             "jsfiles": [
                 "ModelSyncZope.js"
             ]
+        },
+	"multipleTabs": {
+            "jsfiles": [
+                "multipleTabs.js"
+            ]
         }
     }
 }

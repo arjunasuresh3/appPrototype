@@ -1,7 +1,7 @@
 YUI().use('zeView', 'contentSwapper', function(Y) {
 
     var MyView = Y.Base.create('myView', Y.ZeView, [Y.ContentSwapper], {
-        template: '<p border="1">This is the fixed div container, next comes the variable part:</p><div class="variableContent"></div><div class="mainPanels"></div><div class="modalPanels"></div>',
+        template: '<p border="1">This is the fixed div container, next comes the variable part:</p><div class="variableContent"></div><div class="mainPanels"></div><div class="modalPanels"></div><div class="allPanels"></div>',
         initializer: function () {
             this._eventHandles.push(
                 this.on('*:swap', this.swap)
@@ -23,6 +23,7 @@ YUI().use('zeView', 'contentSwapper', function(Y) {
         },
         _render: function (container) {
             container.setHTML(this.template);
+            this.setSwapContainer(container.one('.allPanels'),0);
             this.setSwapContainer(container.one('.variableContent'),1);
             this.setSwapContainer(container.one('.mainPanels'),2);
             this.setSwapContainer(container.one('.modalPanels'),3);
@@ -79,9 +80,14 @@ YUI().use('zeView', 'contentSwapper', function(Y) {
                       }
                   });
         }
-        else { 
+        else if (e.currentTarget._node.id === 'tab6') {
             Y.use("memsearchView" ,function() {
                       myView.setSwapView(new Y.MemSearchView(),1);
+                  });
+        }
+        else { 
+            Y.use("multipleTabs" ,function() {
+                      myView.setSwapView(new Y.MultipleTabs(),0);
                   });
         }
     });

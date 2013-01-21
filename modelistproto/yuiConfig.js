@@ -46,6 +46,10 @@ YUI_config = {
 				'memsearchView': {
 					path: '/memsearchView/memsearchView.js',
 					requires: ["zeView"]
+				},
+				'multipleTabs': {
+					path: '/multipleTabs/multipleTabs.js',
+					requires: ["zeView", "datatable", "contentSwapper", "autocomplete", "autocomplete-highlighters", "panel", "resize-plugin" , "dd-plugin", "overlay"]
 				}
 			}
 		}
