@@ -93,7 +93,7 @@ var tmplpage = '<fieldset>\
                     Y.use('datatable',function() {
                               var table = new Y.DataTable({
                                                               columns: ['MemberId', 'Name', 'DOB'],
-                                                              data: Y.JSON.parse(resp.responseText)
+                                                              data: ml
                                                           });
                               table.on('render',function (ev) {
                                            Y.one('.resultsfieldset').setStyle('display','');
