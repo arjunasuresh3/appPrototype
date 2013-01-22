@@ -19,8 +19,8 @@ var AnotherNewView = Y.Base.create('anothernewView',Y.ZeView, [], {
                                        _clickMe2: function(ev){
                                            console.log("asd");
                                        },
-                                       _render:  function (container) {
-                                           container.setHTML(this.template);
+                                       _refresh:  function () {
+                                           this._contentBox.setHTML(this.template);
                                            var _this = this,
                                            acFields = container.all('input.acFields');
                                            acFields.each(function(eachacField) {

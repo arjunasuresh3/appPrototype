@@ -34,7 +34,9 @@ YUI().use('zeView', 'contentSwapper', function(Y) {
     myView.setSwapContainer(myView._contentBox.one('.modalPanels'),3);
 
     Y.use("newView", function(){
-              myView.setSwapView(new Y.NewView(),1);       
+              var nv = new Y.NewView();
+              nv.render(myView._contentBox.one('.variableContent'));
+              myView.setSwapView(nv,1);       
           });
 
     Y.all(".tabsa").on("click", function(e) {
@@ -42,24 +44,37 @@ YUI().use('zeView', 'contentSwapper', function(Y) {
         e.preventDefault();
         if (e.currentTarget._node.id === 'tab1') {
             Y.use("clearView",function(){
-                      myView.setSwapView(new Y.ClearView(),1);       
+                      var cv = new Y.ClearView();
+                      nv.render(myView._contentBox.one('.variableContent'));
+                      myView.setSwapView(cv,1);       
+
+                      // myView.setSwapView(new Y.ClearView(),1);       
                       // myView.setSwapView(new Y.ClearView({template:''}),2);       
                       // myView.setSwapView(new Y.ClearView({template:''}),3);       
                   });
         }
         else if (e.currentTarget._node.id === 'tab2') {
             Y.use("anotherNewView",function(){
-                      myView.setSwapView(new Y.AnotherNewView(),1);       
+                      var anv = new Y.AnotherNewView();
+                      anv.render(myView._contentBox.one('.variableContent'));
+                      myView.setSwapView(anv,1);       
+
+                      // myView.setSwapView(new Y.AnotherNewView(),1);       
                   });
         }
         else if (e.currentTarget._node.id === 'tab3') {
             Y.use("newView",function(){
-                      myView.setSwapView(new Y.NewView(),1);       
+                      var nv = new Y.NewView();
+                      nv.render(myView._contentBox.one('.variableContent'));
+                      myView.setSwapView(nv,1);       
+
+                      // myView.setSwapView(new Y.NewView(),1);       
                   });
         }
         else if (e.currentTarget._node.id === 'tab4') {
             Y.use("modalView",function(){
                       var mod = new Y.ModalView({container:'#modalPanels'});
+                      mod.render(myView._contentBox.one('.mainPanels'));
                       myView.setSwapView(mod,3);
                       // mod.showPanel();
                   });
