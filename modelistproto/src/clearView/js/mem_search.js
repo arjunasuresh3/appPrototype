@@ -47,9 +47,9 @@ var tmplpage = '<fieldset>\
     containerTemplate: '<div id="testmvc"></div>',
     events: {
       '[name=search]': {click: 'search'},
-      '.ze-calendar': {
-        // 'focus': 'showcal'
-        //,'blur': 'hidecal'
+      '*.ze-calendar': {
+        'focus': 'showcal'
+        ,'blur': 'hidecal'
       }
     },
     template: tmplpage,
@@ -67,9 +67,7 @@ var tmplpage = '<fieldset>\
       });
     },
     showcal: function (ev) {
-      var oReg = ev.target.get('region');
-      YUI.Ze.calendar.show();
-      YUI.Ze.calendar.get('boundingBox').setXY([oReg.left,oReg.bottom]);
+        YUI.Ze.calendar.showUnder(ev.target);
     },
     hidecal: function () {
       YUI.Ze.calendar.hide();

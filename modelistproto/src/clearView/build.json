@@ -6,6 +6,11 @@
                 "model-list-zope.js"
             ]
         },
+	"zecalendar": {
+            "jsfiles": [
+                "zecalendar.js"
+            ]
+        },
         "clearView": {
             "jsfiles": [
                 "clearView.js"

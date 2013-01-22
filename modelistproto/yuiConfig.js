@@ -11,6 +11,10 @@ YUI_config = {
 					path: '/model-list-zope/model-list-zope.js',
 					requires: ["array-extras", "array-invoke", "arraylist", "base-build", "escape", "json-parse", "model"]
 				},
+				'zecalendar': {
+					path: '/zecalendar/zecalendar.js',
+					requires: ["calendar", "base-build", "datatype-date", "event-outside", "event-focus"]
+				},
 				'modelsyncZope': {
 					path: '/modelsyncZope/modelsyncZope.js',
 					requires: ["io", "json"]

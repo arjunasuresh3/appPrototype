@@ -1,5 +1,18 @@
 YUI().use('zeView', 'contentSwapper', function(Y) {
 
+    YUI.namespace('Ze');
+    YUI().use('zecalendar', function (Y) {
+                  YUI.Ze.calendar = new Y.ZeCalendar({
+                                                         contentBox: "#mycalendar",
+                                                         showPrevMonth: true,
+                                                         showNextMonth: true,
+                                                         visible: false,
+                                                         render:true,
+                                                         date: new Date()});
+                  YUI.Ze.calendar.get('boundingBox').setStyle("display", "none");
+              });
+
+
     var MyView = Y.Base.create('myView', Y.ZeView, [Y.ContentSwapper], {
         template: '<p border="1">This is the fixed div container, next comes the variable part:</p><div class="variableContent"></div><div class="mainPanels"></div><div class="modalPanels"></div><div class="allPanels"></div>',
         initializer: function () {
