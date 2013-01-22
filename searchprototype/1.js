@@ -2,11 +2,11 @@ YUI().use('zeView', 'contentSwapper', function(Y) {
 
     var MyView = Y.Base.create('myView', Y.ZeView, [Y.ContentSwapper], {
         template: '<p border="1">This is the fixed div container, next comes the variable part:</p><div class="variableContent"></div><div class="mainPanels"></div><div class="modalPanels"></div>',
-        initializer: function () {
-            this._eventHandles.push(
-                this.on('*:swap', this.swap)
-            );
-        },
+        // initializer: function () {
+        //     // this._eventHandles.push(
+        //     //     this.on('*:swap', this.swap)
+        //     // );
+        // },
         swap: function (ev) {
             switch (ev.which) {
             case 'NewView':
@@ -21,17 +21,19 @@ YUI().use('zeView', 'contentSwapper', function(Y) {
                 break;
             }
         },
-        _render: function (container) {
-            container.setHTML(this.template);
-            this.setSwapContainer(container.one('.variableContent'),1);
-            this.setSwapContainer(container.one('.mainPanels'),2);
-            this.setSwapContainer(container.one('.modalPanels'),3);
+        _refresh: function () {
+            this._contentBox.setHTML(this.template);
+            return this;
         }
     });
 
     var myView = new MyView();
-    myView.render(Y.one('#mainContent'));
-    Y.use("newView",function(){
+    myView.render('#mainContent');
+    myView.setSwapContainer(myView._contentBox.one('.variableContent'),1);
+    myView.setSwapContainer(myView._contentBox.one('.mainPanels'),2);
+    myView.setSwapContainer(myView._contentBox.one('.modalPanels'),3);
+
+    Y.use("newView", function(){
               myView.setSwapView(new Y.NewView(),1);       
           });
 
